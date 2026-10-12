@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glued · Proposal · Time Assist</title>
+<style>
+:root{
+  --primary:#662D91; --dark:#3C1858; --light:#F0E6F6;
+  --ink:#1f1a24; --muted:#5c5566; --line:#e7dff0;
+  --bg:#faf8fc; --white:#ffffff;
+  --warn-bg:#fff4e6; --warn-line:#f0b060;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+header{background:linear-gradient(135deg,var(--primary),var(--dark));color:#fff;padding:44px 0 38px}
+header h1{margin:0 0 10px;font-size:31px;line-height:1.22;font-weight:700}
+header p.lede{margin:0;font-size:17px;opacity:.94;max-width:62ch}
+.meta{margin-top:18px;font-size:14px;opacity:.85}
+nav.tabs{background:var(--white);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+nav.tabs .wrap{display:flex;gap:4px}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:15px 18px;
+  font-size:15px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit}
+.tab[aria-selected="true"]{color:var(--primary);border-bottom-color:var(--primary)}
+.tab:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+main{padding:30px 0 70px}
+.panel{display:none}
+.panel.active{display:block}
+details.sec{background:var(--white);border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
+details.sec>summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;align-items:center;gap:13px;font-weight:600;font-size:16.5px}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.n{background:var(--primary);color:#fff;width:27px;height:27px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;font-size:13.5px;flex:0 0 27px}
+.chev{margin-left:auto;color:var(--primary);transition:transform .18s;font-size:13px}
+details.sec[open]>summary .chev{transform:rotate(90deg)}
+.body{padding:2px 18px 20px 58px}
+.body p{margin:0 0 14px}
+.body ul{margin:0 0 14px;padding-left:20px}
+.body li{margin-bottom:7px}
+h3.mini{margin:22px 0 9px;font-size:15px;color:var(--dark)}
+table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14.5px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--light);font-weight:600;color:var(--dark)}
+.box{border-radius:8px;padding:13px 16px;margin:0 0 16px;font-size:15px}
+.box p:last-child{margin-bottom:0}
+.tip{background:var(--light);border-left:4px solid var(--primary)}
+.warn{background:var(--warn-bg);border-left:4px solid var(--warn-line)}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:0 0 18px}
+.pcard{background:var(--white);border:2px solid var(--line);border-radius:10px;padding:18px}
+.pcard.lead{border-color:var(--primary)}
+.pcard .lab{font-size:14px;color:var(--muted);margin-bottom:5px}
+.pcard .fig{font-size:26px;font-weight:700;color:var(--primary);line-height:1.2}
+.pcard .sub{font-size:13.5px;color:var(--muted);margin-top:5px}
+.flow{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:6px 0;margin:0 0 16px}
+.step{display:flex;gap:13px;padding:11px 16px;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step .sn{background:var(--light);color:var(--dark);font-weight:700;width:26px;height:26px;border-radius:6px;
+  display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 26px}
+.step .st{font-size:15px}
+.step .st strong{display:block;color:var(--dark)}
+.videowrap{position:relative;padding-bottom:56.25%;height:0;border-radius:10px;overflow:hidden;margin:0 0 20px;background:#000}
+.videowrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:14px;background:var(--white)}
+@media (max-width:620px){
+  header h1{font-size:25px}
+  .body{padding:2px 16px 18px 16px}
+  .tab{padding:13px 12px;font-size:14px}
+}
+@media print{
+  nav.tabs{display:none}
+  .panel{display:block !important}
+  details.sec{break-inside:avoid}
+  details.sec>summary .chev{display:none}
+}
+</style>
+</head>
+<body>
+
+
+<header>
+  <div class="wrap">
+    <h1>One simple process for every contact</h1>
+    <p class="lede">Capsule set up for both sides of Glued, so every contact follows the same steps and nobody who said "not now" slips away.</p>
+    <div class="meta">Prepared for David Wilson &nbsp;·&nbsp; Glued</div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <div class="wrap">
+    <button class="tab" id="tab-proposal" role="tab" aria-selected="true" aria-controls="panel-proposal">Proposal</button>
+    <button class="tab" id="tab-call" role="tab" aria-selected="false" aria-controls="panel-call">Demo Call</button>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+  <section class="panel active" id="panel-proposal" role="tabpanel" aria-labelledby="tab-proposal">
+
+    <details class="sec" open>
+      <summary><span class="n">1</span> Where things stand today<span class="chev">▶</span></summary>
+      <div class="body">
+        <p>Glued is now just you, with two offers that reach different people. Teams Glued takes The Train Challenge, and the Behavioural and Leadership programmes built on it, to HR and L&amp;D leads. Glued Marketing does brand, websites, email and outreach for small business owners. Teams Glued is the one that opens doors, and brand work can follow.</p>
+        <p>Most of the work starts with networking: two networking groups, events, one-to-ones, free workshops and LinkedIn. Afterwards there is a pile of business cards, a LinkedIn connection and, with luck, a follow-up call. Proposals sit in a spreadsheet marked won, live or lost, with 20 to 40 live at any time and no contact details beside them. Email goes out through Campaign Monitor, where clients and prospects are mixed together.</p>
+        <p>The people who say "not now" are the ones who disappear, and some of them are worth the most.</p>
+        <div class="box tip">
+          <p>Pipedrive and Popcorn both fell out of use. This time the aim is something light enough that it gets used every day.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">2</span> What we are proposing<span class="chev">▶</span></summary>
+      <div class="body">
+        <p>Capsule CRM, set up around how Glued sells. It is a CRM and nothing more, which is what keeps it simple: your contacts, the conversations that might turn into work, the work itself, and a calendar of what to do next.</p>
+        <table>
+          <tr><th>Tool</th><th>What it does for you</th></tr>
+          <tr><td>Capsule CRM</td><td>Every contact, both offers side by side, your client work, and the follow-ups that keep things moving</td></tr>
+          <tr><td>Transpond (optional)</td><td>Email to your lists from the same contacts, in place of Campaign Monitor</td></tr>
+        </table>
+        <p>The demo on 9 October showed it with sample data. The real setup starts from your own process and your own contacts.</p>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">3</span> Built on how you sell<span class="chev">▶</span></summary>
+      <div class="body">
+        <p>The demo followed the process you described, and the setup starts from there:</p>
+        <ul>
+          <li>Contacts tagged by relationship: Prospect, Client, Past client, Networking, Partner and Keep warm</li>
+          <li>On each person, their persona, where you met and what they are interested in across both offers. That last field is your cross-sell record</li>
+          <li>Teams Glued and Glued Marketing kept separate, each running from a first conversation to a decision</li>
+          <li>One list of client work, ending with aftercare and cross-sell</li>
+          <li>Four tracks: After networking, Proposal follow-up, Keep warm, and Aftercare and cross-sell</li>
+        </ul>
+        <p>You have started working on five personas. Those become the persona list in Capsule, so the right case study goes to the right person.</p>
+        <p>You want to settle your own process before anything is built. The discovery call is where that happens, and the demo gives you something to react to.</p>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">4</span> After networking, and "not now"<span class="chev">▶</span></summary>
+      <div class="body">
+        <p>After an event, each person goes into Capsule with a note of where you met. The After networking track then sets the steps: connect on LinkedIn, add them to the right email list, suggest a follow-up call, and send one more nudge if there is no reply.</p>
+        <p>When someone says not now, the Keep warm track takes over for about six months. It sends a case study that matches their persona, a check-in on LinkedIn, an invitation to a free workshop, and finally a call to ask whether now is the right time. They stay in Capsule with a reason, rather than disappearing.</p>
+        <p>The pile of business cards can be scanned with an app on your phone, with Zapier creating each contact in Capsule. The app is a monthly subscription you can cancel once the pile is cleared.</p>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">5</span> Apollo, LinkedIn and your email lists<span class="chev">▶</span></summary>
+      <div class="body">
+        <p>Apollo and LinkedIn tools such as Waalaxy stay where they are, for the first outreach. When someone replies and a conversation starts, that person comes into Capsule. Your recent Waalaxy campaign is a good example: lots of replies, most of them no, and about five worth following up. Those five are what Capsule is for.</p>
+        <ul>
+          <li>A selected list from Apollo can be exported and imported. Bring in the people you are actually talking to, rather than whole lists.</li>
+          <li>From a LinkedIn profile, a tool called Add to CRM creates the contact in Capsule in one click.</li>
+        </ul>
+        <p>Your Campaign Monitor lists move into Capsule as tags, and Transpond sends from there. The two offers keep separate lists, and there is one source of truth, so the email list and the CRM never drift apart.</p>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">6</span> Keeping it simple<span class="chev">▶</span></summary>
+      <div class="body">
+        <p>You said your instinct is to keep thinking "it could do that too", and that a basic system is better than nothing. So the setup starts with the core: contacts, the two offers, client work and the four tracks.</p>
+        <p>Capsule has more to it, including simple automations, AI features and links to other tools. Those can come later, once the basics are a habit.</p>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">7</span> What it costs<span class="chev">▶</span></summary>
+      <div class="body">
+        <h3 class="mini">The work</h3>
+        <div class="price">
+          <div class="pcard lead">
+            <div class="lab">Quick setup</div>
+            <div class="fig">£500</div>
+            <div class="sub">Discovery call, the setup in your account, importing your contacts, and a recorded walkthrough</div>
+          </div>
+          <div class="pcard">
+            <div class="lab">Monthly sessions</div>
+            <div class="fig">£297</div>
+            <div class="sub">Three one-hour sessions at £99 each, one a month for three months</div>
+          </div>
+        </div>
+        <p>That is £797 in all. These are fees for the work. The software is paid for separately, directly to the providers.</p>
+        <h3 class="mini">The tools</h3>
+        <table>
+          <tr><th>Tool</th><th>Indicative cost</th></tr>
+          <tr><td>Capsule CRM, Starter</td><td>£14 per user per month billed annually, or £18 paid monthly, plus VAT</td></tr>
+          <tr><td>Capsule CRM, Growth</td><td>£27 per user per month billed annually, or £34 paid monthly, plus VAT</td></tr>
+          <tr><td>Transpond (optional)</td><td>From £7 a month. The Starter plan, for up to 5,000 contacts, is £25 plus VAT</td></tr>
+          <tr><td>Card scanning app and Zapier</td><td>The app is a monthly subscription, cancelled once the cards are done. Zapier's free plan is enough for this</td></tr>
+        </table>
+        <div class="box tip">
+          <p>Start on Starter and move up whenever you need to. Starter has one pipeline, so both offers share it and a tag tells them apart. Two separate pipelines, as in the demo, need Growth. Capsule is priced per user, so on your own it is one user.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">8</span> How it runs<span class="chev">▶</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>When</th><th>What happens</th></tr>
+          <tr><td>Week one</td><td>Discovery call: your proposals spreadsheet, your process, the work in progress and the conversations you are having now</td></tr>
+          <tr><td>Week two</td><td>Jaanika sets it up in your account and imports your data, so you have the skeleton ready to go</td></tr>
+          <tr><td>Week three</td><td>Walkthrough: what has been built, how, and how to change it yourself</td></tr>
+          <tr><td>Months one to three</td><td>One hour a month for questions, adjustments and the next step, such as moving your email to Transpond</td></tr>
+        </table>
+        <p>Every session is recorded, with notes, so you can go back to it. Jaanika works on screen share in your own account, so nothing needs redoing afterwards. The monthly sessions can be spaced out if you would rather, for example with a check-in after three months.</p>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">9</span> What is not included<span class="chev">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Outreach tools.</strong> Apollo and Waalaxy stay as they are. Capsule is where a conversation is managed once it starts.</li>
+          <li><strong>Your accounts.</strong> The value on an opportunity is there to plan cash flow, not to replace your accounting software.</li>
+          <li><strong>The subscriptions.</strong> Capsule, Transpond, the scanning app and Zapier are paid directly to them.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">10</span> Next steps<span class="chev">▶</span></summary>
+      <div class="body">
+        <p>We will talk it through on Thursday 15 October at 2pm.</p>
+        <h3 class="mini">Useful to have before then</h3>
+        <ul>
+          <li>Your process as you would like it to work, even in rough</li>
+          <li>Your proposals spreadsheet</li>
+          <li>Your five personas, in whatever state they are in</li>
+          <li>Roughly how many contacts are on your Campaign Monitor lists, and how many business cards are waiting</li>
+          <li>The question you forgot on Friday, if it has come back to you</li>
+        </ul>
+      </div>
+    </details>
+
+  </section>
+
+  <section class="panel" id="panel-call" role="tabpanel" aria-labelledby="tab-call">
+
+    <div class="videowrap">
+      <iframe data-src="https://www.loom.com/embed/34f568bc4b31464fb616b03a25012990" allowfullscreen title="Glued Capsule demo, 9 October 2026"></iframe>
+    </div>
+
+    <details class="sec" open>
+      <summary><span class="n">1</span> What we covered<span class="chev">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li>What Capsule is for: contacts, the conversations before a sale, and the work after it</li>
+          <li>Starting each day from the calendar, alongside your inbox</li>
+          <li>Contacts with persona, where you met and what they are interested in</li>
+          <li>Saved views such as networking contacts and the keep warm list</li>
+          <li>The After networking track</li>
+          <li>The two offers side by side, and what the value on an opportunity is for</li>
+          <li>Client work, aftercare and cross-sell</li>
+          <li>Reports and goals</li>
+          <li>Transpond for email, from the same contacts</li>
+          <li>Apollo, LinkedIn and business cards</li>
+          <li>Cost, and how the setup works</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="sec">
+      <summary><span class="n">2</span> The points that shaped this proposal<span class="chev">▶</span></summary>
+      <div class="body">
+        <p><strong>Simple beats complete.</strong> Popcorn felt complicated because it was also trying to do email marketing, and Pipedrive had too many options for a plan bought without a conversation first. A basic system that gets used beats one that does everything.</p>
+        <p><strong>Both offers in one place.</strong> Seeing Teams Glued and Glued Marketing side by side was the part that helped. They stay separate, with the cross-sell between them visible.</p>
+        <p><strong>Outreach tools find people, Capsule keeps the conversation.</strong> Apollo and LinkedIn do the first contact. Capsule takes over when someone replies.</p>
+        <p>One list, kept in Capsule with Transpond sending, so email and the CRM are never out of step again. That was the problem with the CRMs you have used before.</p>
+        <p>The monthly sessions are there because it is easy to understand something on the day and forget it a month later.</p>
+      </div>
+    </details>
+
+  </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Prepared by Time Assist for David Wilson. Any questions before 15 October, email Jaanika at j.okk [at] timeassist.co.uk</div>
+</footer>
+
+<script>
+(function(){
+  function loadVideos(){
+    document.querySelectorAll('.panel.active iframe[data-src]').forEach(function(f){
+      var d=f.closest('details');
+      if(d && !d.open){return;}
+      if(!f.getAttribute('src')){f.setAttribute('src',f.getAttribute('data-src'));}
+    });
+  }
+  var tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      tabs.forEach(function(x){
+        x.setAttribute('aria-selected','false');
+        var p=document.getElementById(x.getAttribute('aria-controls'));
+        if(p){p.classList.remove('active');}
+      });
+      t.setAttribute('aria-selected','true');
+      var panel=document.getElementById(t.getAttribute('aria-controls'));
+      if(panel){panel.classList.add('active');}
+      window.scrollTo({top:0,behavior:'smooth'});
+      loadVideos();
+    });
+  });
+  document.querySelectorAll('details.sec').forEach(function(d){d.addEventListener('toggle',loadVideos);});
+  loadVideos();
+})();
+</script>
+</body>
+</html>
